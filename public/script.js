@@ -529,19 +529,16 @@ async function fetchDailyAffirmation() {
     
     await new Promise(resolve => setTimeout(resolve, 200));
     
-    // Clear and prepare for typing
-    dailyText.textContent = '';
+    // Display the affirmation (no typing animation)
+    const affirmationText = data.affirmation || 'Something special happened, but it is beyond words!';
+    dailyText.textContent = affirmationText;
     dailyText.classList.remove('fade-out');
     dailyText.classList.add('fade-in');
     
     // Play sparkle sound for daily affirmation
     playSparkle();
     
-    // Type out the affirmation
-    const affirmationText = data.affirmation || 'Something special happened, but it is beyond words!';
-    await typeText(dailyText, affirmationText, 25);
-    
-    // Save to localStorage (save the full text)
+    // Save to localStorage
     localStorage.setItem('dailyAffirmation', affirmationText);
     localStorage.setItem('dailyAffirmationDate', getTodayDate());
     setLastDailyRefreshDate();
@@ -601,17 +598,14 @@ async function fetchAffirmation() {
     
     await new Promise(resolve => setTimeout(resolve, 200));
     
-    // Clear and prepare for typing
-    text.textContent = '';
+    // Display the affirmation (no typing animation to avoid scrambling)
+    const affirmationText = data.affirmation || 'Something nice happened, but it is beyond words!';
+    text.textContent = affirmationText;
     text.classList.remove('fade-out');
     text.classList.add('fade-in');
     
-    // Play chime sound at start
+    // Play chime sound
     playChime();
-    
-    // Type out the affirmation
-    const affirmationText = data.affirmation || 'Something nice happened, but it is beyond words!';
-    await typeText(text, affirmationText, 25);
     
     // Update streak when user gets a new affirmation
     incrementStreak();
