@@ -45,7 +45,12 @@ module.exports = async (req, res) => {
     const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
     
     if (!ANTHROPIC_API_KEY) {
-      return res.status(500).json({ error: 'API key not configured', env: Object.keys(process.env).filter(k => k.includes('ANTHROPIC')) });
+      // Show all env var names to debug
+      return res.status(500).json({ 
+        error: 'API key not configured', 
+        allEnvKeys: Object.keys(process.env).slice(0, 20),
+        hasAnthropic: Object.keys(process.env).filter(k => k.toLowerCase().includes('anthrop'))
+      });
     }
 
     const category = req.query.category || 'general';
