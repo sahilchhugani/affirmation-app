@@ -1,23 +1,17 @@
 {
   "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "api/*.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/generate-affirmation",
-      "dest": "/api/generate-affirmation.js"
+      "source": "/generate-affirmation",
+      "destination": "/api/generate-affirmation"
     },
     {
-      "src": "/generate-daily-affirmation",
-      "dest": "/api/generate-daily-affirmation.js"
+      "source": "/generate-daily-affirmation",
+      "destination": "/api/generate-daily-affirmation"
     },
     {
-      "src": "/generate-relationship-affirmation",
-      "dest": "/api/generate-relationship-affirmation.js"
+      "source": "/generate-relationship-affirmation",
+      "destination": "/api/generate-relationship-affirmation"
     }
   ]
 }
