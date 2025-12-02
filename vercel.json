@@ -4,13 +4,36 @@
     {
       "src": "server.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.js",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/generate-affirmation",
       "dest": "server.js"
+    },
+    {
+      "src": "/generate-daily-affirmation",
+      "dest": "server.js"
+    },
+    {
+      "src": "/generate-relationship-affirmation",
+      "dest": "server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }
-
