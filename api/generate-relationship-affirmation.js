@@ -1,7 +1,5 @@
 const fetch = require('node-fetch');
 
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
-
 const relationshipPrompts = {
   love: (partnerName) => `Write a sweet, romantic affirmation for my partner ${partnerName}. Make it feel like a loving message from their significant other - warm, intimate, and full of love. Keep it 1-2 sentences with a romantic emoji.`,
   appreciation: (partnerName) => `Write a heartfelt message of appreciation for my partner ${partnerName}. Express gratitude for having them in my life and what they mean to me. Make it feel genuine and loving, 1-2 sentences with a heart emoji.`,
@@ -11,12 +9,12 @@ const relationshipPrompts = {
   goodnight: (partnerName) => `Write a tender goodnight message for my partner ${partnerName}. End their day with love and sweet dreams. Make it cozy and romantic, 1-2 sentences with a night/love emoji.`
 };
 
-async function generateAffirmationFromClaude(prompt) {
+async function generateAffirmationFromClaude(prompt, apiKey) {
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': ANTHROPIC_API_KEY,
+      'x-api-key': apiKey,
       'anthropic-version': '2023-06-01'
     },
     body: JSON.stringify({
@@ -43,6 +41,8 @@ async function generateAffirmationFromClaude(prompt) {
 
 module.exports = async (req, res) => {
   try {
+    const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+    
     if (!ANTHROPIC_API_KEY) {
       return res.status(500).json({ error: 'API key not configured' });
     }
@@ -52,7 +52,7 @@ module.exports = async (req, res) => {
     const promptGenerator = relationshipPrompts[category] || relationshipPrompts.love;
     const prompt = promptGenerator(partnerName);
 
-    const affirmation = await generateAffirmationFromClaude(prompt);
+    const affirmation = await generateAffirmationFromClaude(prompt, ANTHROPIC_API_KEY);
     
     res.status(200).json({ affirmation });
   } catch (error) {
@@ -60,4 +60,3 @@ module.exports = async (req, res) => {
     res.status(500).json({ error: 'Failed to generate affirmation. ' + error.message });
   }
 };
-

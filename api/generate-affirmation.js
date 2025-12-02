@@ -1,7 +1,5 @@
 const fetch = require('node-fetch');
 
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
-
 const categoryPrompts = {
   general: 'Give me a short, sweet, and uplifting affirmation to brighten my day. Make it feel personal and warm, like a friend encouraging me.',
   'self-love': 'Give me a heartfelt affirmation about self-love and self-acceptance. Help me appreciate and love myself more. Make it feel like a warm hug from a caring friend.',
@@ -12,12 +10,12 @@ const categoryPrompts = {
   healing: 'Give me a gentle, nurturing affirmation for emotional healing and growth. Help me process difficult feelings with compassion. Make it tender and supportive.'
 };
 
-async function generateAffirmationFromClaude(prompt) {
+async function generateAffirmationFromClaude(prompt, apiKey) {
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': ANTHROPIC_API_KEY,
+      'x-api-key': apiKey,
       'anthropic-version': '2023-06-01'
     },
     body: JSON.stringify({
@@ -44,14 +42,16 @@ async function generateAffirmationFromClaude(prompt) {
 
 module.exports = async (req, res) => {
   try {
+    const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+    
     if (!ANTHROPIC_API_KEY) {
-      return res.status(500).json({ error: 'API key not configured' });
+      return res.status(500).json({ error: 'API key not configured', env: Object.keys(process.env).filter(k => k.includes('ANTHROPIC')) });
     }
 
     const category = req.query.category || 'general';
     const prompt = categoryPrompts[category] || categoryPrompts.general;
 
-    const affirmation = await generateAffirmationFromClaude(prompt);
+    const affirmation = await generateAffirmationFromClaude(prompt, ANTHROPIC_API_KEY);
     
     res.status(200).json({ affirmation });
   } catch (error) {
@@ -59,4 +59,3 @@ module.exports = async (req, res) => {
     res.status(500).json({ error: 'Failed to generate affirmation. ' + error.message });
   }
 };
-

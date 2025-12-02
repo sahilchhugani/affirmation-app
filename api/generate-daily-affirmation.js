@@ -1,13 +1,11 @@
 const fetch = require('node-fetch');
 
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
-
-async function generateAffirmationFromClaude(prompt) {
+async function generateAffirmationFromClaude(prompt, apiKey) {
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': ANTHROPIC_API_KEY,
+      'x-api-key': apiKey,
       'anthropic-version': '2023-06-01'
     },
     body: JSON.stringify({
@@ -34,12 +32,15 @@ async function generateAffirmationFromClaude(prompt) {
 
 module.exports = async (req, res) => {
   try {
+    const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+    
     if (!ANTHROPIC_API_KEY) {
       return res.status(500).json({ error: 'API key not configured' });
     }
 
     const affirmation = await generateAffirmationFromClaude(
-      'Give me a special, meaningful daily affirmation. This should be more profound and thoughtful than a regular affirmation - something to reflect on throughout the day. Make it feel like a heartfelt message from someone who truly cares about me.'
+      'Give me a special, meaningful daily affirmation. This should be more profound and thoughtful than a regular affirmation - something to reflect on throughout the day. Make it feel like a heartfelt message from someone who truly cares about me.',
+      ANTHROPIC_API_KEY
     );
     
     res.status(200).json({ affirmation });
@@ -48,4 +49,3 @@ module.exports = async (req, res) => {
     res.status(500).json({ error: 'Failed to generate daily affirmation. ' + error.message });
   }
 };
-
