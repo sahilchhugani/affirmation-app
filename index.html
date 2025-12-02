@@ -6,10 +6,130 @@
   <title>Words of Affirmation 💖</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="theme-pink">
+  <div class="flowers-container">
+    <div class="flower">🌸</div>
+    <div class="flower">🌺</div>
+    <div class="flower">🌻</div>
+    <div class="flower">🌷</div>
+    <div class="flower">🌹</div>
+    <div class="flower">🌼</div>
+    <div class="flower">🌸</div>
+    <div class="flower">🌺</div>
+    <div class="flower">🌻</div>
+    <div class="flower">🌷</div>
+    <div class="flower">🌹</div>
+    <div class="flower">🌼</div>
+    <div class="flower">🌸</div>
+    <div class="flower">🌺</div>
+    <div class="flower">🌻</div>
+  </div>
+  <button class="favorites-toggle" id="favorites-toggle" title="View Favorites">💖</button>
+  <button class="name-toggle" id="name-toggle" title="Change Name">✏️</button>
+  <button class="theme-toggle" id="theme-toggle" title="Change Theme">🎨</button>
+  <button class="sound-toggle" id="sound-toggle" title="Sound On (click to mute)">🔔</button>
+  <button class="relationship-toggle" id="relationship-toggle" title="Relationship Mode">💑</button>
+  
+  <div class="favorites-sidebar" id="favorites-sidebar">
+    <div class="sidebar-header">
+      <h2>Favorites</h2>
+      <button class="close-sidebar" id="close-sidebar">×</button>
+    </div>
+    <div class="favorites-list" id="favorites-list">
+      <p class="no-favorites">No favorites yet. Click the heart to save affirmations!</p>
+    </div>
+  </div>
+
+  <div class="name-sidebar" id="name-sidebar">
+    <div class="sidebar-header">
+      <h2>Your Name</h2>
+      <button class="close-sidebar" id="close-name-sidebar">×</button>
+    </div>
+    <div class="name-input-content">
+      <label for="name-input" class="name-label">Enter your name:</label>
+      <div class="name-input-wrapper">
+        <input type="text" id="name-input" class="name-input" placeholder="Your name" maxlength="30" />
+        <button id="save-name" class="save-name-button">Save</button>
+      </div>
+      <p class="name-hint">This will personalize the app for you!</p>
+    </div>
+  </div>
+
+  <div class="relationship-sidebar" id="relationship-sidebar">
+    <div class="sidebar-header">
+      <h2>💑 Relationship Mode</h2>
+      <button class="close-sidebar" id="close-relationship-sidebar">×</button>
+    </div>
+    <div class="relationship-content">
+      <p class="relationship-description">Send loving affirmations to your special someone!</p>
+      
+      <label for="partner-name-input" class="name-label">Your partner's name:</label>
+      <div class="name-input-wrapper">
+        <input type="text" id="partner-name-input" class="name-input" placeholder="Their name" maxlength="30" />
+        <button id="save-partner-name" class="save-name-button">Save</button>
+      </div>
+      
+      <div class="relationship-mode-toggle">
+        <label class="toggle-label">
+          <input type="checkbox" id="relationship-mode-checkbox" />
+          <span class="toggle-slider"></span>
+          <span class="toggle-text">Enable Relationship Mode</span>
+        </label>
+      </div>
+      
+      <p class="relationship-hint">When enabled, affirmations will be loving messages for your partner 💕</p>
+    </div>
+  </div>
+
   <div class="container">
-    <h1>💬 Words of Affirmation</h1>
-    <p id="affirmation">Click the button for a little love!</p>
+    <div class="streak-counter" id="streak-counter">
+      <div class="streak-icon">🔥</div>
+      <div class="streak-info">
+        <div class="streak-number" id="streak-number">0</div>
+        <div class="streak-label">Day Streak</div>
+      </div>
+    </div>
+    
+    <div class="daily-section">
+      <h2 class="daily-label">✨ Daily Special ✨</h2>
+      <p id="daily-affirmation" class="daily-affirmation">Click to reveal today's special message</p>
+      <button id="refresh-daily" class="daily-button">Get Today's Special</button>
+      <p class="daily-status" id="daily-status"></p>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <h1 id="personal-title">For You 💖</h1>
+    
+    <div class="category-selector" id="regular-categories">
+      <label class="category-label">Choose your vibe:</label>
+      <div class="category-buttons" id="category-buttons">
+        <button class="category-btn active" data-category="general">💫 General</button>
+        <button class="category-btn" data-category="self-love">💖 Self-Love</button>
+        <button class="category-btn" data-category="motivation">🔥 Motivation</button>
+        <button class="category-btn" data-category="calm">🌊 Calm</button>
+        <button class="category-btn" data-category="confidence">💪 Confidence</button>
+        <button class="category-btn" data-category="gratitude">🙏 Gratitude</button>
+        <button class="category-btn" data-category="healing">🌱 Healing</button>
+      </div>
+    </div>
+    
+    <div class="category-selector relationship-categories" id="relationship-categories" style="display: none;">
+      <label class="category-label">💕 Message type for <span id="partner-display-name">your love</span>:</label>
+      <div class="category-buttons" id="relationship-category-buttons">
+        <button class="category-btn active" data-category="love">💘 Love</button>
+        <button class="category-btn" data-category="appreciation">🥰 Appreciation</button>
+        <button class="category-btn" data-category="support">🤗 Support</button>
+        <button class="category-btn" data-category="missing">💭 Missing You</button>
+        <button class="category-btn" data-category="goodmorning">🌅 Good Morning</button>
+        <button class="category-btn" data-category="goodnight">🌙 Good Night</button>
+      </div>
+    </div>
+    
+    <div class="affirmation-wrapper">
+      <p id="affirmation">Click the button for a little love!</p>
+      <button class="heart-button" id="heart-button" title="Save to favorites">🤍</button>
+    </div>
     <button id="new-affirmation">Show me love ❤️</button>
   </div>
   <script src="script.js"></script>
