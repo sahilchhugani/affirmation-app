@@ -17,7 +17,7 @@ async function generateAffirmationFromClaude(prompt, apiKey) {
           content: prompt
         }
       ],
-      system: 'You are a warm, caring friend who gives personalized, heartfelt affirmations. Your affirmations should feel natural and personal, like something a loving friend would say. Keep them concise (1-2 sentences) and include a relevant emoji at the end. Make each affirmation unique and uplifting. Only respond with the affirmation itself, no extra text.'
+      system: 'You are a warm, caring friend who gives meaningful affirmations. Keep them to 1-2 short sentences (under 20 words total) with one emoji at the end. Be heartfelt but concise. Only respond with the affirmation itself, nothing else.'
     })
   });
 
