@@ -39,6 +39,36 @@ body.theme-winter {
   color: #004d40;
 }
 
+/* Dark Theme */
+body.theme-dark {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+  color: #e0e0e0;
+}
+
+body.theme-dark .container {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.theme-dark .category-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+body.theme-dark .category-btn.active {
+  background: rgba(138, 43, 226, 0.3);
+  border-color: rgba(138, 43, 226, 0.5);
+}
+
+body.theme-dark .feeling-input {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+body.theme-dark .daily-status {
+  color: #b0b0b0;
+}
+
 /* Decorative background elements */
 body::before {
   content: '';
@@ -950,6 +980,57 @@ body.theme-winter .daily-status {
 .theme-winter .category-btn.active {
   background: rgba(0, 77, 64, 0.25);
   border-color: rgba(0, 77, 64, 0.4);
+}
+
+/* Mood Tracker */
+.mood-tracker {
+  text-align: center;
+  margin: 0.5rem 0 1rem 0;
+  opacity: 0;
+  animation: fadeInMood 0.5s ease forwards;
+}
+
+@keyframes fadeInMood {
+  to { opacity: 1; }
+}
+
+.mood-label {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.mood-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.mood-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mood-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
+}
+
+.mood-btn.selected {
+  background: rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.15);
 }
 
 /* Feeling Input */

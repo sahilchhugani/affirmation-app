@@ -29,6 +29,7 @@ const relationshipCategories = document.getElementById("relationship-categories"
 const relationshipCategoryButtons = document.getElementById("relationship-category-buttons");
 const partnerDisplayName = document.getElementById("partner-display-name");
 const feelingInput = document.getElementById("feeling-input");
+const moodTracker = document.getElementById("mood-tracker");
 const body = document.body;
 const flowersContainer = document.querySelector('.flowers-container');
 
@@ -319,7 +320,7 @@ function updateTitle(name) {
 }
 
 // Theme management
-const themes = ['pink', 'christmas', 'winter'];
+const themes = ['pink', 'christmas', 'winter', 'dark'];
 let currentThemeIndex = 0;
 
 function loadTheme() {
@@ -332,7 +333,7 @@ function loadTheme() {
 
 function applyTheme(theme) {
   // Remove all theme classes
-  body.classList.remove('theme-pink', 'theme-christmas', 'theme-winter');
+  body.classList.remove('theme-pink', 'theme-christmas', 'theme-winter', 'theme-dark');
   // Add current theme class
   body.classList.add(`theme-${theme}`);
   
@@ -357,6 +358,12 @@ function updateThemeElements(theme) {
     const winterEmojis = ['❄️', '❄️', '❄️', '❄️', '❄️', '❄️', '❄️', '❄️', '❄️', '❄️', '❄️', '❄️', '❄️', '❄️', '❄️'];
     flowers.forEach((flower, index) => {
       flower.textContent = winterEmojis[index % winterEmojis.length];
+    });
+  } else if (theme === 'dark') {
+    // Stars and moons for dark theme
+    const darkEmojis = ['✨', '🌙', '⭐', '💫', '✨', '🌙', '⭐', '💫', '✨', '🌙', '⭐', '💫', '✨', '🌙', '⭐'];
+    flowers.forEach((flower, index) => {
+      flower.textContent = darkEmojis[index % darkEmojis.length];
     });
   } else {
     // Default pink theme - restore flowers
@@ -618,6 +625,11 @@ async function fetchAffirmation() {
     // Update streak when user gets a new affirmation
     incrementStreak();
     
+    // Show mood tracker (only in regular mode, not relationship mode)
+    if (!relationshipMode && moodTracker) {
+      showMoodTracker();
+    }
+    
     // Remove fade-in class after animation completes
     setTimeout(() => {
       text.classList.remove('fade-in');
@@ -626,6 +638,7 @@ async function fetchAffirmation() {
     text.textContent = 'Sorry, could not fetch a new affirmation right now.';
     text.classList.remove('fade-out');
     text.classList.add('fade-in');
+    hideMoodTracker();
   }
 }
 
@@ -915,6 +928,67 @@ if (relationshipCategoryButtons) {
   relationshipCategoryButtons.addEventListener('click', (e) => {
     if (e.target.classList.contains('category-btn')) {
       selectRelationshipCategory(e.target.dataset.category);
+    }
+  });
+}
+
+// Mood tracker functions
+function showMoodTracker() {
+  if (moodTracker) {
+    moodTracker.style.display = 'block';
+    // Reset any previously selected mood
+    const moodBtns = moodTracker.querySelectorAll('.mood-btn');
+    moodBtns.forEach(btn => btn.classList.remove('selected'));
+  }
+}
+
+function hideMoodTracker() {
+  if (moodTracker) {
+    moodTracker.style.display = 'none';
+  }
+}
+
+function saveMood(mood) {
+  // Get existing mood history or create new
+  const moodHistory = JSON.parse(localStorage.getItem('moodHistory') || '[]');
+  
+  // Add new mood entry
+  moodHistory.push({
+    mood: mood,
+    date: new Date().toISOString(),
+    affirmation: text.textContent
+  });
+  
+  // Keep only last 50 entries
+  if (moodHistory.length > 50) {
+    moodHistory.shift();
+  }
+  
+  localStorage.setItem('moodHistory', JSON.stringify(moodHistory));
+  
+  // Visual feedback
+  const moodBtns = moodTracker.querySelectorAll('.mood-btn');
+  moodBtns.forEach(btn => {
+    btn.classList.remove('selected');
+    if (btn.dataset.mood === mood) {
+      btn.classList.add('selected');
+    }
+  });
+  
+  // Play a soft sound
+  playPop();
+  
+  // Hide after a moment
+  setTimeout(() => {
+    hideMoodTracker();
+  }, 800);
+}
+
+// Initialize mood tracker clicks
+if (moodTracker) {
+  moodTracker.addEventListener('click', (e) => {
+    if (e.target.classList.contains('mood-btn')) {
+      saveMood(e.target.dataset.mood);
     }
   });
 }
