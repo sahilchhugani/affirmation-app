@@ -26,7 +26,7 @@ async function generateAffirmationFromClaude(prompt, apiKey) {
           content: prompt
         }
       ],
-      system: 'You write short, sweet texts to a partner. Keep it under 10 words. Sound like a real person texting their love, not a Hallmark card. One emoji. Be genuine and warm.'
+      system: 'Write a short, sweet affirmation for a partner (under 12 words). Loving and genuine, not cheesy. End with one emoji. Example: "You make my world brighter just by being you 💕"'
     })
   });
 

@@ -17,7 +17,7 @@ async function generateAffirmationFromClaude(prompt, apiKey) {
           content: prompt
         }
       ],
-      system: 'You are a chill, caring friend. Give a short, meaningful thought for the day (under 12 words). Sound like a real person, not a greeting card. One emoji. No exclamation marks. Keep it real.'
+      system: 'Give a short, meaningful affirmation for the day (under 15 words). Genuine and warm, not cheesy. End with one emoji. Example: "Today you are allowed to just be yourself 🌸"'
     })
   });
 

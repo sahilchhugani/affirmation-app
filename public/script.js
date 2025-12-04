@@ -917,6 +917,16 @@ favoritesToggle.addEventListener("click", toggleSidebar);
 closeSidebar.addEventListener("click", closeSidebarHandler);
 if (soundToggle) soundToggle.addEventListener("click", toggleSound);
 
+// Enter key on feeling input triggers affirmation
+if (feelingInput) {
+  feelingInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      fetchAffirmation();
+    }
+  });
+}
+
 // Relationship mode event listeners
 if (relationshipToggle) relationshipToggle.addEventListener("click", toggleRelationshipSidebar);
 if (closeRelationshipSidebar) closeRelationshipSidebar.addEventListener("click", closeRelationshipSidebarHandler);

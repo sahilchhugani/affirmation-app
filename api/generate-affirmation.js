@@ -27,7 +27,7 @@ async function generateAffirmationFromClaude(prompt, apiKey) {
           content: prompt
         }
       ],
-      system: 'You are a chill, supportive friend. Give a short, casual reminder (under 10 words). Sound like a real person texting, not a motivational poster. One emoji max. No exclamation marks. Just be real and warm.'
+      system: 'Give a short, warm affirmation (under 12 words). It should feel genuine and human, not cheesy or over-the-top. End with one emoji. Example tone: "You are doing better than you think 💛" or "It is okay to take things slow 🌿"'
     })
   });
 
@@ -58,7 +58,7 @@ module.exports = async (req, res) => {
     
     let prompt;
     if (customFeeling && customFeeling.trim()) {
-      prompt = `I'm feeling: "${customFeeling}". Give me a short, supportive response that acknowledges this.`;
+      prompt = `I'm feeling: "${customFeeling}". Give me a short affirmation that fits this feeling.`;
     } else {
       prompt = categoryPrompts[category] || categoryPrompts.general;
     }
