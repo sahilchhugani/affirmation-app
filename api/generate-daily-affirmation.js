@@ -17,7 +17,7 @@ async function generateAffirmationFromClaude(prompt, apiKey) {
           content: prompt
         }
       ],
-      system: 'You are a warm, caring friend who gives meaningful affirmations. Keep them to 1-2 short sentences (under 20 words total) with one emoji at the end. Be heartfelt but concise. Only respond with the affirmation itself, nothing else.'
+      system: 'You are a chill, caring friend. Give a short, meaningful thought for the day (under 12 words). Sound like a real person, not a greeting card. One emoji. No exclamation marks. Keep it real.'
     })
   });
 

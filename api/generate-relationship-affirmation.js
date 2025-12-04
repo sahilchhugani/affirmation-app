@@ -26,7 +26,7 @@ async function generateAffirmationFromClaude(prompt, apiKey) {
           content: prompt
         }
       ],
-      system: 'You write short, sweet romantic messages. Keep them to ONE short sentence (under 15 words) with one emoji at the end. Be loving but brief. Only respond with the message itself, nothing else.'
+      system: 'You write short, sweet texts to a partner. Keep it under 10 words. Sound like a real person texting their love, not a Hallmark card. One emoji. Be genuine and warm.'
     })
   });
 

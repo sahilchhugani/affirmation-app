@@ -28,6 +28,7 @@ const regularCategories = document.getElementById("regular-categories");
 const relationshipCategories = document.getElementById("relationship-categories");
 const relationshipCategoryButtons = document.getElementById("relationship-category-buttons");
 const partnerDisplayName = document.getElementById("partner-display-name");
+const feelingInput = document.getElementById("feeling-input");
 const body = document.body;
 const flowersContainer = document.querySelector('.flowers-container');
 
@@ -585,8 +586,15 @@ async function fetchAffirmation() {
       const encodedName = encodeURIComponent(partnerName || 'my love');
       response = await fetch(`/generate-relationship-affirmation?category=${currentRelationshipCategory}&partnerName=${encodedName}`);
     } else {
-      // Use regular endpoint
-      response = await fetch(`/generate-affirmation?category=${currentCategory}`);
+      // Use regular endpoint, include custom feeling if provided
+      const customFeeling = feelingInput ? feelingInput.value.trim() : '';
+      const feelingParam = customFeeling ? `&feeling=${encodeURIComponent(customFeeling)}` : '';
+      response = await fetch(`/generate-affirmation?category=${currentCategory}${feelingParam}`);
+      
+      // Clear the feeling input after use
+      if (feelingInput && customFeeling) {
+        feelingInput.value = '';
+      }
     }
     
     if (!response.ok) throw new Error('Network response was not ok');

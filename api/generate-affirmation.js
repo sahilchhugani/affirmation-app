@@ -1,13 +1,13 @@
 const fetch = require('node-fetch');
 
 const categoryPrompts = {
-  general: 'Give me a short, sweet, and uplifting affirmation to brighten my day. Make it feel personal and warm, like a friend encouraging me.',
-  'self-love': 'Give me a heartfelt affirmation about self-love and self-acceptance. Help me appreciate and love myself more. Make it feel like a warm hug from a caring friend.',
-  motivation: 'Give me a powerful, motivating affirmation to help me push through challenges and achieve my goals. Make it energizing and inspiring, like a coach cheering me on.',
-  calm: 'Give me a calming, peaceful affirmation to help me feel relaxed and at ease. Help me find inner peace and tranquility. Make it soothing and gentle.',
-  confidence: 'Give me an empowering affirmation to boost my confidence and self-belief. Help me feel strong and capable. Make it bold and uplifting.',
-  gratitude: 'Give me a warm affirmation about gratitude and appreciation for life. Help me focus on the good things around me. Make it heartfelt and genuine.',
-  healing: 'Give me a gentle, nurturing affirmation for emotional healing and growth. Help me process difficult feelings with compassion. Make it tender and supportive.'
+  general: 'Give me a simple, warm reminder that things are okay. Like a friend casually reassuring me.',
+  'self-love': 'Remind me to be kind to myself today. Keep it simple and real.',
+  motivation: 'Give me a gentle push to keep going. Not over the top, just real encouragement.',
+  calm: 'Help me take a breath and feel okay. Something soothing and simple.',
+  confidence: 'Remind me that I can handle this. Keep it grounded and real.',
+  gratitude: 'Help me notice something good right now. Keep it simple.',
+  healing: 'Remind me it is okay to not be okay. Be gentle and real.'
 };
 
 async function generateAffirmationFromClaude(prompt, apiKey) {
@@ -27,7 +27,7 @@ async function generateAffirmationFromClaude(prompt, apiKey) {
           content: prompt
         }
       ],
-      system: 'You are a warm, caring friend who gives short, heartfelt affirmations. Keep them to ONE short sentence (under 15 words) with one emoji at the end. Be warm but brief. Only respond with the affirmation itself, nothing else.'
+      system: 'You are a chill, supportive friend. Give a short, casual reminder (under 10 words). Sound like a real person texting, not a motivational poster. One emoji max. No exclamation marks. Just be real and warm.'
     })
   });
 
@@ -54,7 +54,14 @@ module.exports = async (req, res) => {
     }
 
     const category = req.query.category || 'general';
-    const prompt = categoryPrompts[category] || categoryPrompts.general;
+    const customFeeling = req.query.feeling;
+    
+    let prompt;
+    if (customFeeling && customFeeling.trim()) {
+      prompt = `I'm feeling: "${customFeeling}". Give me a short, supportive response that acknowledges this.`;
+    } else {
+      prompt = categoryPrompts[category] || categoryPrompts.general;
+    }
 
     const affirmation = await generateAffirmationFromClaude(prompt, ANTHROPIC_API_KEY);
     

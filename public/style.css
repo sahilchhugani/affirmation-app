@@ -952,6 +952,38 @@ body.theme-winter .daily-status {
   border-color: rgba(0, 77, 64, 0.4);
 }
 
+/* Feeling Input */
+.feeling-input-wrapper {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.feeling-input {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.85rem;
+  color: inherit;
+  font-family: inherit;
+  width: 100%;
+  max-width: 280px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.feeling-input::placeholder {
+  color: inherit;
+  opacity: 0.5;
+  font-style: italic;
+}
+
+.feeling-input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
 /* Affirmation Wrapper with Heart Button */
 .affirmation-wrapper {
   position: relative;
