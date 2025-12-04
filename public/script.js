@@ -858,11 +858,14 @@ function toggleRelationshipMode() {
 }
 
 function updateRelationshipModeUI() {
+  const feelingWrapper = document.getElementById('feeling-input-wrapper');
+  
   if (relationshipMode) {
     // Show relationship categories, hide regular
     if (regularCategories) regularCategories.style.display = 'none';
     if (relationshipCategories) relationshipCategories.style.display = 'block';
     if (relationshipToggle) relationshipToggle.classList.add('active');
+    if (feelingWrapper) feelingWrapper.style.display = 'none'; // Hide feeling input in relationship mode
     
     // Update button text
     button.textContent = `Send love to ${partnerName || 'your love'} 💕`;
@@ -878,6 +881,7 @@ function updateRelationshipModeUI() {
     if (regularCategories) regularCategories.style.display = 'block';
     if (relationshipCategories) relationshipCategories.style.display = 'none';
     if (relationshipToggle) relationshipToggle.classList.remove('active');
+    if (feelingWrapper) feelingWrapper.style.display = 'block'; // Show feeling input in regular mode
     
     // Restore button text
     button.textContent = 'Show me love ❤️';
