@@ -740,14 +740,20 @@ function closeSidebarHandler() {
 
 // Category selection
 function selectCategory(category) {
-  currentCategory = category;
-  localStorage.setItem('selectedCategory', category);
+  // Toggle off if clicking the same category
+  if (currentCategory === category) {
+    currentCategory = '';
+    localStorage.removeItem('selectedCategory');
+  } else {
+    currentCategory = category;
+    localStorage.setItem('selectedCategory', category);
+  }
   
   // Update button states
   const buttons = categoryButtons.querySelectorAll('.category-btn');
   buttons.forEach(btn => {
     btn.classList.remove('active');
-    if (btn.dataset.category === category) {
+    if (currentCategory && btn.dataset.category === currentCategory) {
       btn.classList.add('active');
     }
   });
